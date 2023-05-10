@@ -26,12 +26,15 @@ function display_latest_commit($wp_admin_bar)
   $short_env = substr($env, 0, 3);
   $php_version = phpversion();
 
+  $git_status = shell_exec('git status --porcelain');
+  $has_changes = !empty(trim($git_status));
+  $stop_emoji = $has_changes ? "🛑 " : "";
+
   if (!empty($latest_tag)) {
     $wp_admin_bar->remove_node('wp-logo');
     $wp_admin_bar->add_node(array(
       'id'    => 'latest_tag',
-      // 'title' => 'Version: ' . $latest_tag .'',
-      'title' => "Version: {$latest_tag} ($short_env)",
+      'title' => $stop_emoji . "Version: {$latest_tag} ($short_env)",
       'href'  => $remote_url_https,
       'meta'  => array(
         'class' => 'latest-tag'
@@ -45,7 +48,7 @@ function display_latest_commit($wp_admin_bar)
       $wp_admin_bar->remove_node('wp-logo');
       $wp_admin_bar->add_node(array(
         'id'    => 'latest_commit',
-        'title' => 'Latest Commit: ' . $latest_commit_short,
+        'title' => $stop_emoji . 'Latest Commit: ' . $latest_commit_short,
         'href'  => $remote_url_https,
         'meta'  => array(
           'class' => 'latest-commit'
@@ -64,7 +67,6 @@ function display_latest_commit($wp_admin_bar)
     ));
   }
 }
-
 
 function remove_wp_logo($wp_admin_bar)
 {

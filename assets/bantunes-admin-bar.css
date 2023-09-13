@@ -1,4 +1,19 @@
-#wpadminbar #wp-admin-bar-latest_tag {
-  width: 160px;
-  background-color: orange;
+/* Default color for the tag (if none of the below environments match) */
+.latest-tag, .latest-commit {
+    background-color: orange; 
+}
+
+/* Color for staging environment */
+.env-staging .latest-tag, .env-staging .latest-commit {
+    background-color: green;
+}
+
+/* Color for production environment */
+.env-production .latest-tag, .env-production .latest-commit {
+    background-color: red;
+}
+
+/* Color for development environment */
+.env-development .latest-tag, .env-development .latest-commit {
+    background-color: blue;
 }
